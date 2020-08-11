@@ -30,18 +30,18 @@ const cmd = options.cmd;
 if (cmd) {
   exec(`ssh -t dokku@osa.cubetiqs.com ${cmd}`, (err, stdout, stderr) => {
     if (err) {
-      console.error("error", err);
+      console.error(err);
       return;
     }
-    console.log("Std out", stdout);
+    console.log(stdout);
   });
 } else {
   exec(`ssh -t dokku@osa.cubetiqs.com`, (err, stdout, stderr) => {
     if (err) {
-      console.error("error", err);
+      console.error(err);
       return;
     }
-    console.log("Std out", stdout);
+    console.log(stdout);
   });
   return;
 }
