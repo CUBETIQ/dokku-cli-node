@@ -3,6 +3,7 @@
 const { exec } = require("child_process");
 const chalk = require("chalk");
 const boxen = require("boxen");
+const yargs = require("yargs");
 
 const greeting = chalk.white.bold("Welcome to CUBETIQ App Deployment!");
 
@@ -17,10 +18,30 @@ const msgBox = boxen(greeting, boxenOptions);
 
 console.log(msgBox);
 
-exec("ssh -t dokku@osa.cubetiqs.com ps:report", (err, stdout, stderr) => {
-  if (err) {
-    console.error("command error");
-    return;
-  }
-  console.log("Std out", stdout);
-});
+const options = yargs.usage("Usage: dokku option").option("cmd", {
+  alias: "command",
+  describe: "Dokku command",
+  type: "string",
+  demandOption: false,
+}).argv;
+
+const cmd = options.cmd;
+
+if (cmd) {
+  exec(`ssh -t dokku@osa.cubetiqs.com ${cmd}`, (err, stdout, stderr) => {
+    if (err) {
+      console.error("error", err);
+      return;
+    }
+    console.log("Std out", stdout);
+  });
+} else {
+  exec(`ssh -t dokku@osa.cubetiqs.com`, (err, stdout, stderr) => {
+    if (err) {
+      console.error("error", err);
+      return;
+    }
+    console.log("Std out", stdout);
+  });
+  return;
+}
