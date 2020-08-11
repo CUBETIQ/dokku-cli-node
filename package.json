@@ -18,5 +18,9 @@
   "homepage": "https://github.com/CUBETIQ/dokku-cli-node#readme",
   "bin": {
     "cubetiq-app": "./bin/dokku.js"
+  },
+  "dependencies": {
+    "boxen": "^4.0.0",
+    "chalk": "^2.4.2"
   }
 }
